@@ -7,5 +7,14 @@ export type ServerConfig  = {
 }
 
 export async function getServerConfig() {
+    let serverConfig = {}
 
+    try {
+        const serverConfigJson: string = await invoke('get_server_config');
+        serverConfig = JSON.parse(serverConfigJson);
+    } catch(err) {
+        console.log(err);
+    }
+
+    return serverConfig;
 }

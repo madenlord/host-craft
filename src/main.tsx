@@ -7,7 +7,9 @@ import {
   RouterProvider
 } from 'react-router-dom';
 
-import Index from './pages/index';
+import Index, {
+  loader as indexLoader
+} from './pages/index';
 
 import './style/globals.css';
 
@@ -17,6 +19,7 @@ const router = createBrowserRouter(
       <Route
         path='/'
         element={<Index />}
+        loader={indexLoader}
       />
     </>
   )
