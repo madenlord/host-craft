@@ -1,0 +1,60 @@
+.configPanel {
+    display:flex;
+    flex-direction:column;
+    gap:50px;
+}
+
+.configDisplay {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+}
+
+.wide {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    width:100%;
+    height:100%;
+
+    background-image:linear-gradient(0deg, rgba(0,0,0,0.6),
+    rgba(0,0,0,0.6));
+}
+
+.interact {
+    position:relative;
+    width:100%;
+    height:100%;
+}
+
+.centeredNav {
+    position:absolute;
+    top:50%;
+}
+
+.emptyHeader {
+    width:100%;
+    height:10%;
+}
+
+.buttonColumn {
+    display:flex;
+    flex-direction:column; 
+    gap:10px;
+
+    width:35%;
+}
+
+.buttonColumn a {
+    width:100%;
+}
+
+.buttonColumn button {
+    width:100%;
+}
+
+.footer {
+    position:absolute;
+    bottom:5px;
+    align-items:center;
+}

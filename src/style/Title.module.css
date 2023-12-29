@@ -1,0 +1,16 @@
+.title {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    font-size:large;
+
+    margin:30px;
+}
+
+.title h1 {
+    font-family:'capital-minecraft';
+    font-size:75px;
+    margin:10px;
+}
