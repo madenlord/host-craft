@@ -12,7 +12,8 @@ import Index, {
 } from './pages/index';
 import Settings from './pages/settings';
 import SettingsServer, {
-  loader as serverLoader
+  loader as serverLoader,
+  action as serverAction
 } from './pages/settingsServer';
 
 import './style/globals.css';
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
         path='/settings/server'
         element={<SettingsServer />}
         loader={serverLoader}
+        action={serverAction}
       />
     </>
   )

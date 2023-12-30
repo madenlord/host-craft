@@ -14,10 +14,21 @@ fn get_server_config() -> Result<String, String> {
   }
 }
 
+#[tauri::command(rename_all = "snake_case")]
+fn update_server_config(json_config: &str) -> Result<(), String> {
+  let write_result = file::write(servercfg::get_config_filepath().as_str(), json_config);
+
+  match write_result {
+    Ok(_) => { Ok(()) },
+    Err(_) => { Err(String::from("Fail updating server configuration file!"))}
+  }
+}
+
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
-      get_server_config
+      get_server_config,
+      update_server_config
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

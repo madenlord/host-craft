@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { Form, useLoaderData} from 'react-router-dom';
+import { Form, useLoaderData, redirect } from 'react-router-dom';
 
 import FormField from '../components/FormField';
 import SubmitButton from '../components/SubmitButton';
-import { ServerConfig, getServerConfig } from '../services/serverConfig';
+import { 
+    ServerConfig,
+    getServerConfig,
+    updateServerConfig
+} from '../services/serverConfig';
 
 import styles from '../style/shared.module.css';
 
@@ -11,9 +15,21 @@ interface LoaderData {
     server: ServerConfig;
 }
 
+interface ActionData {
+    request: Request;
+}
+
 export async function loader() {
     const server = await getServerConfig();
     return { server };
+}
+
+export async function action({ request }: ActionData) {
+    const formData: FormData = await request.formData();
+    const updates = Object.fromEntries(formData);
+    await updateServerConfig(updates);
+
+    return redirect('/settings');
 }
 
 export default function SettingsServer() {
