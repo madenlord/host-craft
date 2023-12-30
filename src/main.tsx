@@ -10,6 +10,7 @@ import {
 import Index, {
   loader as indexLoader
 } from './pages/index';
+import Settings from './pages/settings';
 
 import './style/globals.css';
 
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
         path='/'
         element={<Index />}
         loader={indexLoader}
+      />
+      <Route
+        path='/settings'
+        element={<Settings />}
       />
     </>
   )
