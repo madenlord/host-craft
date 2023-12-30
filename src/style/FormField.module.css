@@ -1,0 +1,27 @@
+.formField {
+    padding:5px 0px 5px 0px;
+}
+
+.formField span {
+    padding:0px 5px 0px 5px;
+}
+
+.formField input {
+    font-family:'minecraft';
+    font-size:large;
+    color:white;
+
+    border:2px solid black;
+
+    background-image:linear-gradient(0deg, rgba(0,0,0,0.8),
+        rgba(0,0,0,0.8)), url('../assets/backgrounds/smooth_stone.png');
+}
+
+.invalid {
+    border-color:red;
+}
+
+.inputFormat {
+    font-size:small;
+    color:brown;
+}

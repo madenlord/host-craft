@@ -11,6 +11,9 @@ import Index, {
   loader as indexLoader
 } from './pages/index';
 import Settings from './pages/settings';
+import SettingsServer, {
+  loader as serverLoader
+} from './pages/settingsServer';
 
 import './style/globals.css';
 
@@ -25,6 +28,11 @@ const router = createBrowserRouter(
       <Route
         path='/settings'
         element={<Settings />}
+      />
+      <Route
+        path='/settings/server'
+        element={<SettingsServer />}
+        loader={serverLoader}
       />
     </>
   )
