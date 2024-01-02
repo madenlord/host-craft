@@ -1,13 +1,15 @@
 import ConfigParam from "./ConfigParam";
 import { ServerConfig } from "../services/serverConfig";
+import { RepoConfig } from "../services/repoConfig";
 
 import styles from "../style/ConfigDisplay.module.css";
 
 interface Props {
   server: ServerConfig;
+  repo: RepoConfig;
 }
 
-export default function ConfigDisplay({ server }: Props) {
+export default function ConfigDisplay({ server, repo }: Props) {
   return (
     <div className={styles.configDisplay}>
       <fieldset>
@@ -21,6 +23,15 @@ export default function ConfigDisplay({ server }: Props) {
             label="Enable server GUI:"
             value={server.gui ? "Yes" : "No"}
           />
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>
+          <b>Repository</b>
+        </legend>
+        <div className={styles.configBox}>
+          <ConfigParam label="User name:" value={repo.username} />
+          <ConfigParam label="Repo URL:" value={repo.url} />
         </div>
       </fieldset>
     </div>

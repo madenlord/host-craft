@@ -15,6 +15,10 @@ import SettingsServer, {
   loader as serverLoader,
   action as serverAction
 } from './pages/settingsServer';
+import SettingsRepo, {
+  loader as repoLoader,
+  action as repoAction
+} from './pages/settingsRepo';
 
 import './style/globals.css';
 
@@ -35,6 +39,12 @@ const router = createBrowserRouter(
         element={<SettingsServer />}
         loader={serverLoader}
         action={serverAction}
+      />
+      <Route
+        path='/settings/repo'
+        element={<SettingsRepo />}
+        loader={repoLoader}
+        action={repoAction}
       />
     </>
   )
