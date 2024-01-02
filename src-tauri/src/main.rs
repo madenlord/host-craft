@@ -35,15 +35,25 @@ fn get_repo_config() -> Result<String, String> {
   }
 }
 
+#[tauri::command(rename_all = "snake_case")]
+fn update_repo_config(json_config: &str) -> Result<(), String> {
+  let update_result = repo::set_repo_json_config(json_config);
+
+  match update_result {
+    Ok(ok) => { Ok(()) },
+    Err(_) => { Err(String::from("Could not update the local Git repo configuration!")) }
+
+  }
+}
+
 
 
 
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
-      get_server_config,
-      update_server_config,
-      get_repo_config
+      get_server_config, update_server_config,
+      get_repo_config, update_repo_config
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

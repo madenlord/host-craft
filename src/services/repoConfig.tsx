@@ -17,3 +17,17 @@ export async function getRepoConfig() {
 
     return repoConfig;
 }
+
+export async function updateRepoConfig(updates: any) {
+    let repoConfig = {};
+
+    try {
+        Object.assign(repoConfig, updates);
+        await invoke(
+            'update_repo_config',
+            { json_config: JSON.stringify(repoConfig) }
+        );
+    } catch(err) {
+        console.log(err);
+    }
+}

@@ -25,6 +25,20 @@ pub fn get_repo_json_config() -> Result<String, Box<dyn DynError>> {
     Ok(serde_json::to_string(&repo_config)?)
 }
 
+pub fn set_repo_json_config(json_config: &str) -> Result<(), Box<dyn DynError>> {
+    set_repo_config(&(
+        serde_json::from_str(json_config)?
+    ))?;
+
+    Ok(())
+}
+
+
+
+
+// =============================================================
+// =========================== PRIVATE =========================
+// =============================================================
 fn get_repo_config() -> Result<RepoConfig, Box<dyn DynError>> {
     let username = get_repo_config_param("username")?;
     let url = get_repo_config_param("url")?;
@@ -48,6 +62,13 @@ fn get_repo_config_param(param: &str) -> Result<String, Box<dyn DynError>> {
     };
 
     Ok(String::from(str::from_utf8(&cmd_output.stdout)?))
+}
+
+fn set_repo_config(repo_config: &RepoConfig) -> Result<(), Box<dyn DynError>> {
+    git::set_username(repo_config.username.as_str())?; 
+    git::set_url(repo_config.url.as_str())?;
+
+    Ok(())
 }
 
 
