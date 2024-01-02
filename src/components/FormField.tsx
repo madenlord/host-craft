@@ -15,6 +15,7 @@ interface Props {
 
 export default function FormField({ label, type, inputName, placeholder, defaultValue, validate, onValidityChange}: Props) {
     const [ valid, setValid ] = useState(true); 
+    const [ value, setValue ] = useState(defaultValue);
 
     function isValid(inputText: string) {
         let isValid: boolean = memSizeRegex.test(inputText);
@@ -33,16 +34,14 @@ export default function FormField({ label, type, inputName, placeholder, default
                 aria-label={label}
                 type={type}
                 name={inputName}
-                defaultValue={defaultValue}
+                value={value}
                 onChange={ type === 'text' && validate
                     ? e => isValid(e.target.value)  
-                    : undefined
+                    : type === 'checkbox' 
+                        ? () => { setValue(!value) }
+                        : undefined
                 }
-                checked={ type === 'checkbox'  
-                    ? defaultValue 
-                    : false
-                }
-
+                checked={type === 'checkbox' ? value : undefined}
             />
         {type == 'text' && !valid
         ? <p className={styles.inputFormat}>
