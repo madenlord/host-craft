@@ -7,7 +7,14 @@ import {
   RouterProvider
 } from 'react-router-dom';
 
-import Index from './pages/index';
+import Index, {
+  loader as indexLoader
+} from './pages/index';
+import Settings from './pages/settings';
+import SettingsServer, {
+  loader as serverLoader,
+  action as serverAction
+} from './pages/settingsServer';
 
 import './style/globals.css';
 
@@ -17,6 +24,17 @@ const router = createBrowserRouter(
       <Route
         path='/'
         element={<Index />}
+        loader={indexLoader}
+      />
+      <Route
+        path='/settings'
+        element={<Settings />}
+      />
+      <Route
+        path='/settings/server'
+        element={<SettingsServer />}
+        loader={serverLoader}
+        action={serverAction}
       />
     </>
   )
