@@ -10,6 +10,9 @@ import {
 import Index, {
   loader as indexLoader
 } from './pages/index';
+import Home, {
+  loader as homeLoader
+} from './pages/home';
 import Settings from './pages/settings';
 import SettingsServer, {
   loader as serverLoader,
@@ -29,6 +32,11 @@ const router = createBrowserRouter(
         path='/'
         element={<Index />}
         loader={indexLoader}
+      />
+      <Route
+        path='/home'
+        element={<Home />}
+        loader={homeLoader}
       />
       <Route
         path='/settings'

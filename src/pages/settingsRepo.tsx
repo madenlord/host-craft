@@ -24,7 +24,7 @@ export async function action({ request }: ActionData) {
     const updates = Object.fromEntries(formData);
     await updateRepoConfig(updates);
 
-    return redirect('..');
+    return redirect('/settings');
 }
 
 export default function SettingsRepo() {

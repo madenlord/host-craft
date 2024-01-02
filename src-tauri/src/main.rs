@@ -5,7 +5,7 @@ use hostcraft::repo;
 use hostcraft::ioutils::file;
 use hostcraft::server::servercfg;
 
-#[tauri::command(rename_all = "snake_case")]
+#[tauri::command]
 fn get_server_config() -> Result<String, String> {
   let server_config = file::read(servercfg::get_config_filepath().as_str());
 
@@ -25,7 +25,12 @@ fn update_server_config(json_config: &str) -> Result<(), String> {
   }
 }
 
-#[tauri::command(rename_all = "snake_case")]
+#[tauri::command]
+fn is_repo_initialized() -> bool {
+  repo::is_repo_initialized()
+}
+
+#[tauri::command]
 fn get_repo_config() -> Result<String, String> {
   let repo_config = repo::get_repo_json_config();
 
@@ -40,7 +45,7 @@ fn update_repo_config(json_config: &str) -> Result<(), String> {
   let update_result = repo::set_repo_json_config(json_config);
 
   match update_result {
-    Ok(ok) => { Ok(()) },
+    Ok(()) => { Ok(()) },
     Err(_) => { Err(String::from("Could not update the local Git repo configuration!")) }
 
   }
@@ -53,7 +58,7 @@ fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![
       get_server_config, update_server_config,
-      get_repo_config, update_repo_config
+      is_repo_initialized, get_repo_config, update_repo_config
     ])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

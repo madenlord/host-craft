@@ -10,7 +10,7 @@ export default function Settings() {
         <LinkButton to="repo" text="Repository" />
       </div>
       <div className={`${styles.buttonColumn} ${styles.footer}`}>
-        <LinkButton to=".." text="Done" />
+        <LinkButton to="/home" text="Done" />
       </div>
     </>
   );

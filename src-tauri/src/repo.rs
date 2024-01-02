@@ -3,6 +3,10 @@ use std::str;
 use std::fmt;
 use serde::{Serialize, Deserialize};
 
+
+// =============================================================
+// ==================== STRUCTS AND CONSTANTS ==================
+// =============================================================
 #[derive(Serialize, Deserialize)]
 struct RepoConfig {
     username: String,
@@ -20,6 +24,9 @@ impl fmt::Display for RepoError {
 
 impl DynError for RepoError {}
 
+// =============================================================
+// ========================== FUNCTIONS ========================
+// =============================================================
 pub fn get_repo_json_config() -> Result<String, Box<dyn DynError>> {
     let repo_config = get_repo_config()?;
     Ok(serde_json::to_string(&repo_config)?)
@@ -31,6 +38,10 @@ pub fn set_repo_json_config(json_config: &str) -> Result<(), Box<dyn DynError>> 
     ))?;
 
     Ok(())
+}
+
+pub fn is_repo_initialized() -> bool {
+    git::is_git_initialized()
 }
 
 
@@ -76,9 +87,17 @@ fn set_repo_config(repo_config: &RepoConfig) -> Result<(), Box<dyn DynError>> {
 
 mod git {
     use std::process::Output;    
+    use std::path::Path;
     use std::io::Error;
 
     use crate::ioutils::terminal;
+
+    const REPO_PATH: &str = "./mojang";
+
+    // =========== GIT REPOSITORY PATH FUNCTIONS ===========
+    pub fn is_git_initialized() -> bool {
+        Path::new(format!("{REPO_PATH}/.git").as_str()).exists()
+    }
 
     // =========== GIT LOCAL CONFIG OPERATIONS ===========
     pub fn get_username() -> Result<Output, Error> {
@@ -101,6 +120,6 @@ mod git {
     fn execute_git_command<'a>(command: &'a str, mut args: Vec<&'a str>) -> Result<Output, Error> { 
         let mut git_args: Vec<&str> = vec![command];
         git_args.append(&mut args);
-        terminal::execute_command("git", git_args, "./mojang")
+        terminal::execute_command("git", git_args, REPO_PATH)
     }
 }

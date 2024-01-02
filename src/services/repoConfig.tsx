@@ -5,6 +5,10 @@ export type RepoConfig = {
     url: string
 }
 
+export async function isRepoInitialized() {
+    return await invoke('is_repo_initialized');
+}
+
 export async function getRepoConfig() {
     let repoConfig = {}
 
