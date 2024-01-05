@@ -5,7 +5,7 @@ import styles from "../style/shared.module.css";
 export default function Settings() {
   return (
     <>
-      <div className={`${styles.buttonColumn} ${styles.centeredNav}`}>
+      <div className={`${styles.buttonColumn} ${styles.vCenter}`}>
         <LinkButton to="server" text="Server" />
         <LinkButton to="repo" text="Repository" />
       </div>

@@ -10,6 +10,9 @@ import {
 import Index, {
   loader as indexLoader
 } from './pages/index';
+import Welcome, {
+  action as welcomeAction
+} from './pages/welcome';
 import Home, {
   loader as homeLoader
 } from './pages/home';
@@ -32,6 +35,11 @@ const router = createBrowserRouter(
         path='/'
         element={<Index />}
         loader={indexLoader}
+      />
+      <Route
+        path='/welcome'
+        element={<Welcome />}
+        action={welcomeAction}
       />
       <Route
         path='/home'
