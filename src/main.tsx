@@ -10,6 +10,12 @@ import {
 import Index, {
   loader as indexLoader
 } from './pages/index';
+import Welcome, {
+  action as welcomeAction
+} from './pages/welcome';
+import Home, {
+  loader as homeLoader
+} from './pages/home';
 import Settings from './pages/settings';
 import SettingsServer, {
   loader as serverLoader,
@@ -29,6 +35,16 @@ const router = createBrowserRouter(
         path='/'
         element={<Index />}
         loader={indexLoader}
+      />
+      <Route
+        path='/welcome'
+        element={<Welcome />}
+        action={welcomeAction}
+      />
+      <Route
+        path='/home'
+        element={<Home />}
+        loader={homeLoader}
       />
       <Route
         path='/settings'

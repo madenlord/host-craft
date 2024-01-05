@@ -17,11 +17,11 @@
         rgba(0,0,0,0.8)), url('../assets/backgrounds/smooth_stone.png');
 }
 
-.invalid {
+.invalidInput {
     border-color:red;
 }
 
-.inputFormat {
+.invalidMessage {
     font-size:small;
     color:brown;
 }

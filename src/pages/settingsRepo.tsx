@@ -1,6 +1,6 @@
 import { Form, useLoaderData, redirect } from 'react-router-dom';
 
-import FormField from '../components/FormField';
+import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
 import { RepoConfig, getRepoConfig, updateRepoConfig } from '../services/repoConfig';
 
@@ -24,7 +24,7 @@ export async function action({ request }: ActionData) {
     const updates = Object.fromEntries(formData);
     await updateRepoConfig(updates);
 
-    return redirect('..');
+    return redirect('/settings');
 }
 
 export default function SettingsRepo() {
@@ -35,13 +35,13 @@ export default function SettingsRepo() {
           <header className={styles.emptyHeader}></header>
           <div className={styles.wide}>
             <Form method="post">
-                <FormField
+                <FormInput
                   label="User name:"
                   type="text"
                   inputName="username"
                   defaultValue={repo.username}
                 />
-                <FormField
+                <FormInput
                   label="Repository URL:"
                   type="text"
                   inputName="url"
