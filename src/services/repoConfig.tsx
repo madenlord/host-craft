@@ -9,6 +9,20 @@ export async function isRepoInitialized() {
     return await invoke('is_repo_initialized');
 }
 
+export async function initializeRepo(configuration: any) {
+    let repoConfig = {}
+
+    try {
+        Object.assign(repoConfig, configuration);
+        await(invoke(
+            'init_repo',
+            { repo_config: JSON.stringify(repoConfig) }
+        )); 
+    } catch(err) {
+        console.log(err);
+    }
+}
+
 export async function getRepoConfig() {
     let repoConfig = {}
 

@@ -2,7 +2,7 @@ import { Form, redirect } from "react-router-dom";
 
 import FormInput from "../components/FormInput";
 import SubmitButton from "../components/SubmitButton";
-import { updateRepoConfig } from "../services/repoConfig";
+import { initializeRepo } from "../services/repoConfig";
 
 import styles from "../style/shared.module.css";
 
@@ -12,8 +12,8 @@ interface ActionData {
 
 export async function action({ request }: ActionData) {
   const formData: FormData = await request.formData();
-  const updates = Object.fromEntries(formData);
-  await updateRepoConfig(updates);
+  const configuration = Object.fromEntries(formData);
+  await initializeRepo(configuration);
 
   return redirect("/home");
 }
