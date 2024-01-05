@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import styles from '../style/FormField.module.css';
+import styles from '../style/FormInput.module.css';
 
 const memSizeRegex = /[0-9]+[K|M|G]/
 
@@ -13,7 +13,7 @@ interface Props {
     onValidityChange?: Function;
 }
 
-export default function FormField({ label, type, inputName, placeholder, defaultValue, validate, onValidityChange}: Props) {
+export default function FormInput({ label, type, inputName, placeholder, defaultValue, validate, onValidityChange}: Props) {
     const [ valid, setValid ] = useState(true); 
     const [ value, setValue ] = useState(defaultValue);
 

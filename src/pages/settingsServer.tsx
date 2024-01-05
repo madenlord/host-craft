@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, useLoaderData, redirect } from 'react-router-dom';
 
-import FormField from '../components/FormField';
+import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
 import { 
     ServerConfig,
@@ -45,7 +45,7 @@ export default function SettingsServer() {
         <header className={styles.emptyHeader}></header>
         <div className={styles.wide}>
           <Form method="post">
-              <FormField
+              <FormInput
                 label="Maximum RAM memory:"
                 type="text"
                 inputName="mem_max"
@@ -53,7 +53,7 @@ export default function SettingsServer() {
                 validate={true}
                 onValidityChange={handleValidityChange}
               />
-              <FormField
+              <FormInput
                 label="Memory at startup:"
                 type="text"
                 inputName="mem_init"
@@ -61,7 +61,7 @@ export default function SettingsServer() {
                 validate={true}
                 onValidityChange={handleValidityChange}
               />
-              <FormField
+              <FormInput
                 label="Enable GUI:"
                 type="checkbox"
                 inputName="gui"
