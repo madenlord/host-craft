@@ -1,8 +1,8 @@
 use std::process::Output;    
-use std::path::Path;
 use std::io::Error;
 
 use crate::ioutils::terminal;
+use crate::ioutils::file;
 
 pub const REPO_PATH: &str = "./mojang";
 
@@ -16,7 +16,7 @@ pub fn lfs_track(regex: &str) -> Result<Output, Error> {
 }
 
 pub fn is_git_initialized() -> bool {
-    Path::new(format!("{REPO_PATH}/.git").as_str()).exists()
+    file::exists((format!("{REPO_PATH}/.git").as_str()))
 }
 
 // =========== GIT LOCAL CONFIG OPERATIONS ===========

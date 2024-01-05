@@ -1,13 +1,14 @@
 mod git;
 
 use std::error::Error as DynError;
-use std::path::Path;
 use std::str;
 use std::fmt;
 
 use serde::{Serialize, Deserialize};
 
 use super::ioutils::file;
+
+const HOSTFILE_PATH: &str = "/.host";
 
 
 // =============================================================
@@ -58,9 +59,17 @@ pub fn init_repo(repo_config: &str) -> Result<(), Box<dyn DynError>> {
     let gitignore_path = git::REPO_PATH.to_owned() + "/.gitignore";
     let gitignore_path = gitignore_path.as_str();
 
-    if !Path::new(gitignore_path).exists() {
+    if !file::exists(gitignore_path) {
         file::write(gitignore_path, 
             "./libraries\n./logs\n./versions")?;
+    }
+
+    // .host file is created if not existing in the remote repo
+    let hostfile_path = git::REPO_PATH.to_owned() + HOSTFILE_PATH;
+    let hostfile_path = hostfile_path.as_str();
+
+    if !file::exists(hostfile_path) {
+        file::touch(hostfile_path)?;
     }
 
     Ok(())
