@@ -47,8 +47,21 @@ pub fn fetch() -> Result<Output, Error> {
 
 pub fn pull(ff: bool) -> Result<Output, Error> {
     let mut args = None;
-    if ff { args = Some(vec!["--no-ff"]); }
+    if !ff { args = Some(vec!["--no-ff"]); }
     execute_git_command("pull", args)
+}
+
+// =========== PUSH DATA =========
+pub fn add(files: Vec<&str>) -> Result<Output, Error> {
+    execute_git_command("add", Some(files))
+}
+
+pub fn commit(message: &str) -> Result<Output, Error> {
+    execute_git_command("commit", Some(vec!["-m", message]))
+}
+
+pub fn push() -> Result<Output, Error> {
+    execute_git_command("push", None)
 }
 
 // =========== PRIVATE ===========

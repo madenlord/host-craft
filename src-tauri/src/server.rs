@@ -4,6 +4,7 @@ use std::process::Child;
 use std::io::Write;
 
 use servercfg::ServerConfig;
+use crate::repo;
 use crate::ioutils::terminal;
 
 
@@ -92,9 +93,16 @@ impl Server {
             State::RUNNING(pid) => Err(ServerError::RUNNING(*pid)),
             State::HOSTED(host) => Err(ServerError::HOSTED(String::from(host))),
             State::STOPPED => { 
-                let pid = self.execute_server_jar()?;
-                self.state = State::RUNNING(pid);
-                Ok(())
+                let (hosting, current_host) = self.host()?;
+                if hosting {
+                    let pid = self.execute_server_jar()?;
+                    self.state = State::RUNNING(pid);
+                    Ok(())
+                }
+                else {
+                    self.state = State::HOSTED(current_host.clone());
+                    Err(ServerError::HOSTED(current_host))
+                }
             }
         }
     }
@@ -147,6 +155,35 @@ impl Server {
         }
         else { Err(ServerError::NO_CONFIG) }
     } 
+
+    fn host(&mut self) -> Result<(bool, String), ServerError> {
+        let mut hosting: bool = false;
+
+        match repo::download_world_data_updates() {
+            Err(_) => return Err(ServerError::REPO_FAIL),
+            _ => ()
+        };
+
+        let mut current_host = match repo::get_repo_host() {
+            Ok(username) => username,
+            Err(_) => return Err(ServerError::IO_ERROR(repo::get_hostfile_path()))
+        };
+
+        if current_host.is_empty() {
+            current_host = match repo::who_am_i() {
+                Ok(name) => name,
+                Err(_) => return Err(ServerError::REPO_FAIL)
+            };
+
+            match repo::commit_host(current_host.as_str()) {
+                Err(_) => return Err(ServerError::REPO_FAIL),
+                _ => ()
+            }
+            hosting = true;
+        }
+
+        Ok((hosting, current_host))
+    }
 }
 
 

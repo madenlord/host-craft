@@ -8,7 +8,7 @@ use serde::{Serialize, Deserialize};
 
 use super::ioutils::file;
 
-const HOSTFILE_PATH: &str = "/.host";
+const HOSTFILE_REL_PATH: &str = "/.host";
 
 
 // =============================================================
@@ -34,6 +34,8 @@ impl DynError for RepoError {}
 // =============================================================
 // ========================== FUNCTIONS ========================
 // =============================================================
+
+// =========== PERFORM ACTIONS ===========
 pub fn is_repo_initialized() -> bool {
     git::is_git_initialized()
 }
@@ -65,7 +67,7 @@ pub fn init_repo(repo_config: &str) -> Result<(), Box<dyn DynError>> {
     }
 
     // .host file is created if not existing in the remote repo
-    let hostfile_path = git::REPO_PATH.to_owned() + HOSTFILE_PATH;
+    let hostfile_path = get_hostfile_path();
     let hostfile_path = hostfile_path.as_str();
 
     if !file::exists(hostfile_path) {
@@ -73,6 +75,51 @@ pub fn init_repo(repo_config: &str) -> Result<(), Box<dyn DynError>> {
     }
 
     Ok(())
+}
+
+pub fn download_world_data_updates() -> Result<bool, std::io::Error> {
+    let mut update_found: bool = false;
+
+    // Get latest changes in repo
+    let update_res = git::fetch()?;
+
+    // If there are updates to be downloaded:
+    if !update_res.stdout.is_empty() || !update_res.stderr.is_empty() {
+        update_found = true;
+        git::pull(false)?;
+    }
+
+    Ok(update_found)
+}
+
+pub fn upload_world_data() -> Result<(), std::io::Error> {
+    git::add(vec!["*"])?;
+    git::commit("World data update!")?;
+    git::push()?;
+
+    Ok(())
+}
+
+pub fn commit_host(user: &str) -> Result<(), std::io::Error> {
+    // Current hostname is written in the hostfile and
+    // changes are pushed to the Git repo
+    update_hostfile(user)?;
+    git::add(vec![HOSTFILE_REL_PATH])?;
+    git::commit(format!("{} is now hosting the server!", user).as_str())?;
+
+    Ok(())
+}
+
+pub fn update_hostfile(user: &str) -> Result<(), std::io::Error> {
+    file::write(get_hostfile_path().as_str(), user)?;
+
+    Ok(())
+}
+
+// =========== GETTERS & SETTERS ===========
+pub fn get_repo_host() -> Result<String, std::io::Error> {
+    let hostfile_content = file::read(get_hostfile_path().as_str())?;
+    Ok(String::from(hostfile_content.trim()))
 }
 
 pub fn get_repo_json_config() -> Result<String, Box<dyn DynError>> {
@@ -86,6 +133,15 @@ pub fn set_repo_json_config(json_config: &str) -> Result<(), Box<dyn DynError>> 
     ))?;
 
     Ok(())
+}
+
+pub fn get_hostfile_path() -> String {
+    String::from(git::REPO_PATH.to_owned() + HOSTFILE_REL_PATH)
+}
+
+pub fn who_am_i() -> Result<String, Box<dyn DynError>> {
+    let repo_config = get_repo_config()?;
+    Ok(repo_config.username) 
 }
 
 
