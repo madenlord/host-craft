@@ -116,6 +116,8 @@ impl Server {
 
                 self.state = State::STOPPED;
 
+                self.release_host()?;
+
                 Ok(())
             },
             None => {
@@ -156,7 +158,7 @@ impl Server {
         else { Err(ServerError::NO_CONFIG) }
     } 
 
-    fn host(&mut self) -> Result<(bool, String), ServerError> {
+    fn host(&self) -> Result<(bool, String), ServerError> {
         let mut hosting: bool = false;
 
         match repo::download_world_data_updates() {
@@ -183,6 +185,23 @@ impl Server {
         }
 
         Ok((hosting, current_host))
+    }
+
+    fn release_host(&self) -> Result<(), ServerError> {
+        // host file content is flushed
+        match repo::update_hostfile("") {
+            Err(_) => return Err(ServerError::IO_ERROR(repo::get_hostfile_path())),
+            _ => ()
+        }
+
+        // All world data, including the recently edited hostfile,
+        // is updated and pushed into the remote repo
+        match repo::upload_world_data() {
+            Err(_) => return Err(ServerError::REPO_FAIL),
+            _ => ()
+        }
+
+        Ok(())
     }
 }
 
