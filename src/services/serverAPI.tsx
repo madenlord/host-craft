@@ -8,6 +8,19 @@ export async function runServer() {
     }
 }
 
+export async function getPublicIP(): Promise<string> {
+    let publicIP: string = '';
+
+    try {
+        const response = await fetch('https://api.ipify.org');
+        publicIP = await response.text();
+    } catch(err) {
+        console.log(err);
+    }
+
+    return publicIP;
+}
+
 export async function stopServer() {
     try {
         await invoke('stop_server');
