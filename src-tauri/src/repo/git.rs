@@ -16,7 +16,7 @@ pub fn lfs_track(regex: &str) -> Result<Output, Error> {
 }
 
 pub fn is_git_initialized() -> bool {
-    file::exists((format!("{REPO_PATH}/.git").as_str()))
+    file::exists(format!("{REPO_PATH}/.git").as_str())
 }
 
 // =========== GIT LOCAL CONFIG OPERATIONS ===========

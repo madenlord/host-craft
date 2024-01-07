@@ -6,12 +6,12 @@ import LinkButton from '../components/LinkButton';
 import {
     ServerConfig,
     getServerConfig
-} from '../services/serverConfig';
+} from '../services/serverConfigAPI';
 
 import {
   RepoConfig,
   getRepoConfig
-} from '../services/repoConfig';
+} from '../services/repoConfigAPI';
 
 import styles from '../style/shared.module.css';
 

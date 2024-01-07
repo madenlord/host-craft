@@ -2,7 +2,7 @@ import { Form, redirect } from "react-router-dom";
 
 import FormInput from "../components/FormInput";
 import SubmitButton from "../components/SubmitButton";
-import { initializeRepo } from "../services/repoConfig";
+import { initializeRepo } from "../services/repoConfigAPI";
 
 import styles from "../style/shared.module.css";
 

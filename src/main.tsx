@@ -25,6 +25,7 @@ import SettingsRepo, {
   loader as repoLoader,
   action as repoAction
 } from './pages/settingsRepo';
+import ServerExecution from './pages/run';
 
 import './style/globals.css';
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter(
         element={<SettingsRepo />}
         loader={repoLoader}
         action={repoAction}
+      />
+      <Route
+        path='/run'
+        element={<ServerExecution />}
       />
     </>
   )

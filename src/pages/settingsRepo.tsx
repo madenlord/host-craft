@@ -2,7 +2,7 @@ import { Form, useLoaderData, redirect } from 'react-router-dom';
 
 import FormInput from '../components/FormInput';
 import SubmitButton from '../components/SubmitButton';
-import { RepoConfig, getRepoConfig, updateRepoConfig } from '../services/repoConfig';
+import { RepoConfig, getRepoConfig, updateRepoConfig } from '../services/repoConfigAPI';
 
 import styles from '../style/shared.module.css';
 
