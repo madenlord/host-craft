@@ -40,6 +40,13 @@ pub fn add_origin(origin_url: &str) -> Result<Output, Error> {
     execute_git_command("remote", Some(vec!["add", "origin", origin_url]))
 }
 
+// =========== BRANCHING =========
+pub fn checkout(branch: &str, force: bool) -> Result<Output, Error> {
+    let mut args = vec![branch];
+    if force { args.push("--force"); }
+    execute_git_command("checkout", Some(args))
+}
+
 // =========== GET AND UPDATE STATE ===========
 pub fn fetch() -> Result<Output, Error> {
     execute_git_command("fetch", None)

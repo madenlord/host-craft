@@ -8,7 +8,7 @@ use serde::{Serialize, Deserialize};
 
 use super::ioutils::file;
 
-const HOSTFILE_REL_PATH: &str = "/.host";
+const HOSTFILE_NAME: &str = ".host";
 
 
 // =============================================================
@@ -51,7 +51,7 @@ pub fn init_repo(repo_config: &str) -> Result<(), Box<dyn DynError>> {
 
     // Repository content is pulled
     git::fetch()?;
-    git::pull(false)?;
+    git::checkout("master", true)?;
 
     // Git LFS is initialized
     git::lfs_track("*.dat")?;
@@ -103,9 +103,11 @@ pub fn upload_world_data() -> Result<(), std::io::Error> {
 pub fn commit_host(user: &str) -> Result<(), std::io::Error> {
     // Current hostname is written in the hostfile and
     // changes are pushed to the Git repo
+    let user = user.trim();
     update_hostfile(user)?;
-    git::add(vec![HOSTFILE_REL_PATH])?;
+    git::add(vec![HOSTFILE_NAME])?;
     git::commit(format!("{} is now hosting the server!", user).as_str())?;
+    git::push()?;
 
     Ok(())
 }
@@ -136,7 +138,7 @@ pub fn set_repo_json_config(json_config: &str) -> Result<(), Box<dyn DynError>> 
 }
 
 pub fn get_hostfile_path() -> String {
-    String::from(git::REPO_PATH.to_owned() + HOSTFILE_REL_PATH)
+    String::from(git::REPO_PATH.to_owned() + "/" + HOSTFILE_NAME)
 }
 
 pub fn who_am_i() -> Result<String, Box<dyn DynError>> {
