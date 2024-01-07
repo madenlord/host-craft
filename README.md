@@ -1,4 +1,4 @@
-# HostCraf: Share your world data with your friends!
+# HostCraft: Share your world data with your friends!
 
 HostCraft is a small project that aims to make it easier to host a Minecraft server with your friends. 
 With this tool, any of your mates can host your common Minecraft server at any time, and as they wish! 
