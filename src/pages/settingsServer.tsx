@@ -7,7 +7,7 @@ import {
     ServerConfig,
     getServerConfig,
     updateServerConfig
-} from '../services/serverConfig';
+} from '../services/serverConfigAPI';
 
 import styles from '../style/shared.module.css';
 

@@ -1,6 +1,6 @@
 import { redirect } from 'react-router';
 
-import { isRepoInitialized } from '../services/repoConfig';
+import { isRepoInitialized } from '../services/repoConfigAPI';
 
 export async function loader() {
     let path: string;

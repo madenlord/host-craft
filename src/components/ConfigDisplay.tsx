@@ -1,6 +1,6 @@
 import ConfigParam from "./ConfigParam";
-import { ServerConfig } from "../services/serverConfig";
-import { RepoConfig } from "../services/repoConfig";
+import { ServerConfig } from "../services/serverConfigAPI";
+import { RepoConfig } from "../services/repoConfigAPI";
 
 import styles from "../style/ConfigDisplay.module.css";
 

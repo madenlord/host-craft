@@ -44,6 +44,7 @@ pub mod terminal {
 pub mod file {
     use std::fs::{File, OpenOptions};
     use std::io::{Write, Read};
+    use std::path::Path;
 
     pub fn open_file(filepath: &str) -> Result<File, std::io::Error> {
         OpenOptions::new()
@@ -64,11 +65,19 @@ pub mod file {
         file.write_all(content.as_bytes())
     }
 
+    pub fn touch(filepath: &str) -> Result<(), std::io::Error> {
+        write(filepath, "")
+    }
+
     pub fn read(filepath: &str) -> Result<String, std::io::Error> {
         let mut file = open_read_file(filepath)?;
         let mut buffer: String = String::new();
         file.read_to_string(&mut buffer)?;
 
         Ok(buffer)
+    }
+
+    pub fn exists(filepath: &str) -> bool {
+        Path::new(filepath).exists()
     }
 }
