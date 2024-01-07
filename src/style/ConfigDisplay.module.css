@@ -1,0 +1,9 @@
+.configDisplay {
+    composes: configDisplay from './shared.module.css';
+
+    padding:20px;
+}
+
+.configBox {
+    composes: configBox from './shared.module.css';
+}
